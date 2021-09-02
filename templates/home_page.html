@@ -1,0 +1,184 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load static %}
+{% load render_partial %}
+
+
+{% block banner %}
+    {% render_partial 'home_banner' %}
+{% endblock %}
+{% block content %}
+    <div class="col-md-8 mag-innert-right">
+        {% for category, posts in home_posts %}
+            <div class="technology">
+                <h2 class="tittle"><i class="glyphicon glyphicon-certificate"> </i>{{ category }}</h2>
+                {% for post in posts %}
+                    <div class="editor-pics">
+                        <div class="col-md-3 item-pic">
+                            <img src="{{ post.image.url }}" class="img-responsive" alt=""/>
+
+                        </div>
+                        <div class="col-md-9 item-details">
+                            <h4 class="inner two"><a href="{{ post.get_absolute_url }}">
+                                {{ post.title }}
+                            </a></h4>
+                            <h5 class="inner two">
+                                {{ post.content|truncatechars:200 }}
+                            </h5>
+                            <div class="td-post-date two">{{ post.created_on }}</div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                {% endfor %}
+                <div class="clearfix"></div>
+            </div>
+            <br>
+        {% endfor %}
+<br>
+    <hr>
+        {% comment %}       <div class="business">
+            <h3 class="tittle"><i class="glyphicon glyphicon-briefcase"></i>کسب و کار</h3>
+            <div class="business-inner">
+                <div class="col-md-6 b-img"><a href="single.html"><img class="img-responsive"
+                                                                       src="{% static 'images/time.jpg' %}"
+                                                                       alt=""/></a></div>
+                <div class="col-md-6 b-text">
+                    <h5><a href="single.html">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </a>
+                    </h5>
+                    <h6><i class="glyphicon glyphicon-time"></i>Jun 25, 2015</h6>
+                    <div class="icons"><a href="#"><i class="glyphicon glyphicon-user"></i>ادمین</a><a href="#"><i
+                            class="glyphicon glyphicon-comment"></i>2</a><a href="#"><i
+                            class="glyphicon glyphicon-thumbs-up"></i>152</a><a href="#"><i
+                            class="glyphicon glyphicon-thumbs-down"></i> 26</a></div>
+                    <div class="clearfix"></div>
+                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                        است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط
+                        فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>
+                    <a class="read" href="single.html">
+                        ادامه مطلب
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+                <div class="business-bottom-content">
+                    <div class="col-md-6 business-bottom">
+                        <div class="col-md-3 b-bottom-pic">
+                            <a href="single.html"><img class="img-responsive"
+                                                       src="{% static 'images/ti1.jpg' %}" alt=""/></a>
+                        </div>
+                        <div class="col-md-9 b-bottom-text">
+                            <h5><a href="single.html">لورم ایپسوم متن ساختگی با تولید سادگی </a></h5>
+                            <h6><i class="glyphicon glyphicon-time"></i>Jun 25, 2015</h6>
+                            <div class="icons"><a href="#"><i class="glyphicon glyphicon-user"></i>ادمین</a><a
+                                    href="#"><i class="glyphicon glyphicon-comment"></i>2</a><a href="#"><i
+                                    class="glyphicon glyphicon-thumbs-up"></i>152</a><a href="#"><i
+                                    class="glyphicon glyphicon-thumbs-down"></i> 26</a></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-6 business-bottom">
+                        <div class="col-md-3 b-bottom-pic">
+                            <a href="single.html"><img class="img-responsive"
+                                                       src="{% static 'images/ti1.jpg' %}" alt=""/></a>
+                        </div>
+                        <div class="col-md-9 b-bottom-text">
+                            <h5><a href="single.html">لورم ایپسوم متن ساختگی با تولید سادگی </a></h5>
+                            <h6><i class="glyphicon glyphicon-time"></i>Jun 25, 2015</h6>
+                            <div class="icons"><a href="#"><i class="glyphicon glyphicon-user"></i>ادمین</a><a
+                                    href="#"><i class="glyphicon glyphicon-comment"></i>2</a><a href="#"><i
+                                    class="glyphicon glyphicon-thumbs-up"></i>152</a><a href="#"><i
+                                    class="glyphicon glyphicon-thumbs-down"></i> 26</a></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="business-inner two">
+                <div class="col-md-6 b-img"><a href="single.html"><img class="img-responsive"
+                                                                       src="{% static 'images/time2.jpg' %}"
+                                                                       alt=""/></a></div>
+                <div class="col-md-6 b-text">
+                    <h5><a href="single.html">لورم ایپسوم متن ساختگی با تولید سادگی </a></h5>
+                    <h6><i class="glyphicon glyphicon-time"></i>Jun 25, 2015</h6>
+                    <div class="icons"><a href="#"><i class="glyphicon glyphicon-user"></i>ادمین</a><a href="#"><i
+                            class="glyphicon glyphicon-comment"></i>2</a><a href="#"><i
+                            class="glyphicon glyphicon-thumbs-up"></i>152</a><a href="#"><i
+                            class="glyphicon glyphicon-thumbs-down"></i> 26</a></div>
+                    <div class="clearfix"></div>
+                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                        است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط
+                        فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>
+                    <a class="read" href="single.html">
+                        ادامه مطلب
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+                <div class="business-bottom-content">
+                    <div class="col-md-6 business-bottom">
+                        <div class="col-md-3 b-bottom-pic">
+                            <a href="single.html"><img class="img-responsive"
+                                                       src="{% static 'images/ti1.jpg' %}" alt=""/></a>
+                        </div>
+                        <div class="col-md-9 b-bottom-text">
+                            <h5><a href="single.html">
+                                اکنون زمان برای تغییر کار است
+                            </a></h5>
+                            <h6><i class="glyphicon glyphicon-time"></i>Jun 25, 2015</h6>
+                            <div class="icons"><a href="#"><i class="glyphicon glyphicon-user"></i>ادمین</a><a
+                                    href="#"><i class="glyphicon glyphicon-comment"></i>2</a><a href="#"><i
+                                    class="glyphicon glyphicon-thumbs-up"></i>152</a><a href="#"><i
+                                    class="glyphicon glyphicon-thumbs-down"></i> 26</a></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-6 business-bottom">
+                        <div class="col-md-3 b-bottom-pic">
+                            <a href="single.html"><img class="img-responsive"
+                                                       src="{% static 'images/ti1.jpg' %}" alt=""/></a>
+                        </div>
+                        <div class="col-md-9 b-bottom-text">
+                            <h5><a href="single.html">
+                                اکنون زمان برای تغییر کار است
+                            </a></h5>
+                            <h6><i class="glyphicon glyphicon-time"></i>Jun 25, 2015</h6>
+                            <div class="icons"><a href="#"><i class="glyphicon glyphicon-user"></i>ادمین</a><a
+                                    href="#"><i class="glyphicon glyphicon-comment"></i>2</a><a href="#"><i
+                                    class="glyphicon glyphicon-thumbs-up"></i>152</a><a href="#"><i
+                                    class="glyphicon glyphicon-thumbs-down"></i> 26</a></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>{% endcomment %}
+
+        <!--//latest-articles-->
+        <!--فارسی شضده توسط مرجع تخصصی برنامه نویسان-->
+        <div class="latest-articles">
+            <h3 class="tittle"><i class="glyphicon glyphicon-file"></i>
+                آخرین مقالات
+            </h3>
+
+            {% for post in last_articles %}
+                <div class="col-md-4 mag-innert-right">
+{#                    <div class="world-news-grid">#}
+                        <img src="{{ post.image.url }}" width="150px" height="120px" alt=""/>
+                        <a href="{{ post.get_absolute_url }}" class="wd">{{ post.title }}</a>
+                        <p>{{ post.content|truncatechars:120 }}</p>
+                        <a class="read" href="{{ post.get_absolute_url }}">
+                            ادامه مطلب
+                        </a>
+{#                    </div>#}
+                </div>
+            {% endfor %}
+
+            {#            <div class="clearfix">#}
+            {#            </div>#}
+        </div>
+    </div>
+    <!--//articles-->
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'shared/_MainLayout.html' %}
+
+{% block content %}
+    <!--/contact-->
+    <div class="section-contact">
+        <div class="container">
+            <div class="contact-main">
+                <div class="col-md-6 contact-in">
+                    <h5>درباره ما</h5>
+                    <p class="para1">
+                        {{ setting.about_us }}
+                    </p>
+                    <div class="more-address">
+                        <address>
+                            <strong>آدرس:</strong><br>
+                            {{ setting.address }}<br><br>
+                            تماس :{{ setting.phone }} <br>
+                            فکس : {{ setting.fax }} <br>
+                        </address>
+                        <address>
+                            <strong>ایمیل:</strong><br>
+                            <a href="">{{ setting.email }}</a>
+                        </address>
+                    </div>
+                </div>
+                <div class="col-md-6 contact-grid">
+                    <form method="post">
+                        {% csrf_token %}
+                        <p class="your-para">نام:</p>
+                        {{ contact_form.full_name }}
+                        {% for error in contact_form.full_name.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                        {% endfor %}
+                        <p class="your-para">ایمیل:</p>
+                        {{ contact_form.email }}
+                        {% for error in contact_form.email.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                        {% endfor %}
+                        <p class="your-para">عنوان:</p>
+                        {{ contact_form.subject }}
+                        {% for error in contact_form.subject.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                        {% endfor %}
+                        <p class="your-para">پیام:</p>
+                        {{ contact_form.text }}
+                        {% for error in contact_form.text.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                        {% endfor %}
+                        <div class="send">
+                            <input type="submit" value="ارسال">
+                        </div>
+                    </form>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="map-bottom">
+                <div class="col-md-4 adrs-right">
+                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                    <p>{{ setting.address }}</p>
+                </div>
+                <div class="col-md-4 adrs-right adrs-middle">
+                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                    <p>{{ setting.phone }} , {{ setting.mobile }}</p>
+                </div>
+                <div class="col-md-4 adrs-right adrs-left">
+                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    <p><a href="">{{ setting.email }}</a></p>
+                </div>
+                <div class="clearfix"></div>
+                {% block extra_content %}
+                {% endblock %}
+            </div>
+            {% block bottom_content %}
+            {% endblock %}
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,6 @@
+<ul class="dropdown-menu">
+    {% for category in categories %}
+        <li><a href="/news/{{ category.name }}">{{ category.title }}</a></li>
+    {% endfor %}
+
+</ul>

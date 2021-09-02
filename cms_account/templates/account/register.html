@@ -1,0 +1,72 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load render_partial %}
+
+{% block title %}
+    <title>ثبت نام</title>
+{% endblock %}
+
+{% block banner %}
+    {% with title="ثبت نام" %}
+        {% render_partial 'banner' %}
+    {% endwith %}
+{% endblock %}
+
+
+{% block content %}
+
+    <!--account-->
+    <div class="account">
+        <div class="container">
+            <div class="account-bottom">
+                <div class="col-md-6 account-right">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="account-top heading">
+                            <h3>
+                                ثبت نام کاربر جدید
+                            </h3>
+                        </div>
+                        <div class="address">
+                            <span>{{ register_form.user_name.label }}</span>
+                            {{ register_form.user_name }}
+                            {% for error in register_form.user_name.errors %}
+                                <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="address">
+                            <span>{{ register_form.email.label }}</span>
+                            {{ register_form.email }}
+                            {% for error in register_form.email.errors %}
+                                <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="address">
+                            <span>{{ register_form.password.label }}</span>
+                            {{ register_form.password }}
+                            {% for error in register_form.password.errors %}
+                                <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="address">
+                            <span>{{ register_form.re_password.label }}</span>
+                            {{ register_form.re_password }}
+                            {% for error in register_form.re_password.errors %}
+                                <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="address new">
+                            <input type="submit" value="ارسال">
+                        </div>
+                    </form>
+                    {% block extra_content %}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        {% block bottom_content %}
+        {% endblock %}
+    </div>
+
+
+{% endblock %}

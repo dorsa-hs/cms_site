@@ -1,0 +1,94 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="col-md-8 mag-innert-right">
+        <div class="banner-bottom-right-grids">
+            <div class="single-right-grid">
+                <img src="{{ post.image.url }}" alt="">
+                <h4>
+                    {{ post.title }}
+                </h4>
+                <p class="text">
+                    {{ post.content|escape|linebreaks }}
+                </p>
+                <div class="single-bottom">
+                    <ul>
+                        <li><a href="#">
+                            {{ post.author }}
+                        </a></li>
+                        <li>{{ post.created_on }}</li>
+                        <li><a href="#">ادمین</a></li>
+                        <li>{{ post.number_of_comments }} نظر</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="post">
+            <h3>
+                نظرات
+            </h3>
+
+            {% for comment in comments %}
+                <div class="post-grids">
+                    <div class="col-md-9 post-left">
+                        <div class="single-bottom">
+                        <ul>
+                            <li>
+                                <strong>
+                                    {{ comment.author.get_username }}
+                                </strong>
+                            </li>
+                            <li class="comments">
+                                {{ comment.date_posted }}
+                            </li>
+                        </ul>
+                        </div>
+                        <br>
+                        <p class="text">
+                            {{ comment.content }}
+                        </p>
+
+                    </div>
+                </div>
+                <br>
+                <hr>
+            {% endfor %}
+            <br><br>
+            <!--leave-->
+            <div class="leave">
+                <h4>
+                    ارسال نظر
+                </h4>
+                {% if request.user.is_authenticated %}
+                    <form id="commentform" method="post">
+                        {% csrf_token %}
+                        {% comment %}<p class="comment-form-author-name"><label for="author">نام</label>
+                        <input id="author" type="text" value="" size="30" aria-required="true">
+                    </p>
+                    <p class="comment-form-email">
+                        <label class="email">ایمیل</label>
+                        <input id="email" type="text" value="" size="30" aria-required="true">
+                    </p>{% endcomment %}
+                        <p class="comment-form-comment">
+                            {{ comment_form.content }}
+                        </p>
+                        <div class="clearfix"></div>
+                        <p class="form-submit">
+                            <input type="submit" id="submit" value="ارسال">
+                        </p>
+                        <div class="clearfix"></div>
+                    </form>
+                {% else %}
+                    <p>
+                        برای ارسال نظر باید وارد حساب کاربری خود شوید
+                    </p>
+                {% endif %}
+
+            </div>
+        </div>
+        <!--//leave-->
+        <!--فارسی شده توسط مرجع تخصصی برنامه نویسان-->
+    </div>
+{% endblock %}

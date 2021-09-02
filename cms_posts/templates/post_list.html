@@ -1,0 +1,58 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load jformat %}
+{% load static %}
+
+
+{% block content %}
+    <div class="col-md-8 mag-innert-right">
+        <div class="technology">
+            <h3 class="tittle"><i class="glyphicon glyphicon-certificate"> </i>{{ category_title|default:'همه' }}</h3>
+            <div class="col-md-12 tech-text">
+                {% for post in page_obj %}
+                    <div class="editor-pics">
+                        <div class="col-md-3 item-pic">
+                            <img src="{{ post.image.url }}" class="img-responsive" alt=""/>
+
+                        </div>
+                        <div class="col-md-9 item-details">
+                            <h4 class="inner two"><a href="{{ post.get_absolute_url }}">
+                                {{ post.title }}
+                            </a></h4>
+                            <h5 class="inner two">
+                                {{ post.content|truncatechars:200 }}
+                            </h5>
+                            <div class="td-post-date two">{{ post.created_on }}</div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                {% endfor %}
+
+
+                <nav>
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li><a href="?page={{ page_obj.previous_page_number }}"
+                                   aria-label="Previous"><span>قبلی</span></a></li>
+                        {% endif %}
+                        {% for page in paginator.page_range %}
+                            {% if page == page_obj.number %}
+                                <li class="active"><a href="?page={{ page }}">{{ page }} <span
+                                        class="sr-only">(current)</span></a></li>
+                            {% else %}
+                                <li><a href="?page={{ page }}">{{ page }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <li><a href="?page={{ page_obj.next_page_number }}"
+                                   aria-label="Next"><span>بعدی</span></a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+{% endblock %}
+
