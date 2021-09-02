@@ -20,7 +20,7 @@ from cms_site import settings
 from .views import home_page, header, footer, home_banner, banner, posts_categories_partial
 
 urlpatterns = [
-    path('', home_page),
+path('', home_page),
     path('header', header, name='header'),
     path('footer', footer, name='footer'),
     path('home-banner', home_banner, name='home_banner'),
