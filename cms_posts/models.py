@@ -44,8 +44,6 @@ class PostManager(models.Manager):
 class Post(models.Model):
     # title field using charfield constraint with unique constraint
     title = models.CharField(max_length=200, unique=True, verbose_name='عنوان')
-    # slug field auto populated using title with unique constraint
-    slug = models.SlugField(max_length=200, unique=True, verbose_name='نام در url')
     # author field populated using users database
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='نویسنده')
     # and date time fields automatically populated using system time
