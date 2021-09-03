@@ -1,4 +1,6 @@
 import os
+
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django_jalali.db import models as jmodels
 from django.contrib.auth.models import User
@@ -53,7 +55,7 @@ class Post(models.Model):
     created_on = jmodels.jDateField(verbose_name='تاریخ')
     time = models.TimeField(null=True, verbose_name='زمان')
     # content field to store our post
-    content = models.TextField(verbose_name='محتوا')
+    content = RichTextUploadingField(null=True, blank=True, verbose_name='محتوا')
     active = models.BooleanField(default=False, verbose_name='فعال / غیرفعال')
     categories = models.ManyToManyField(PostCategory, blank=True, verbose_name="دسته بندی ها")
 

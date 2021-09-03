@@ -19,7 +19,7 @@
                                 {{ post.title }}
                             </a></h4>
                             <h5 class="inner two">
-                                {{ post.content|truncatechars:200 }}
+                                {{ post.content|safe|truncatechars:200}}
                             </h5>
                             <div class="td-post-date two">{{ post.created_on }}</div>
                         </div>

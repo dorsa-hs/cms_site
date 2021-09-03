@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_render_partial',
     'django_jalali',
+    'ckeditor',
+    'ckeditor_uploader',
 
     # cms apps
     'cms_account',
@@ -48,7 +50,7 @@ INSTALLED_APPS = [
     'cms_category',
     'cms_comments'
 ]
-
+CKEDITOR_UPLOAD_PATH = "uploads/"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

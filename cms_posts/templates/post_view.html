@@ -11,7 +11,7 @@
                     {{ post.title }}
                 </h4>
                 <p class="text">
-                    {{ post.content|escape|linebreaks }}
+                    {{ post.content|safe }}
                 </p>
                 <div class="single-bottom">
                     <ul>

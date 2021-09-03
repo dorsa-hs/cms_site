@@ -22,7 +22,7 @@
                                 {{ post.title }}
                             </a></h4>
                             <h5 class="inner two">
-                                {{ post.content|truncatechars:200 }}
+                                {{ post.content|safe|truncatechars:200 }}
                             </h5>
                             <div class="td-post-date two">{{ post.created_on }}</div>
                         </div>
@@ -168,7 +168,7 @@
 {#                    <div class="world-news-grid">#}
                         <img src="{{ post.image.url }}" width="150px" height="120px" alt=""/>
                         <a href="{{ post.get_absolute_url }}" class="wd">{{ post.title }}</a>
-                        <p>{{ post.content|truncatechars:120 }}</p>
+                        <p>{{ post.content|safe|truncatechars:120 }}</p>
                         <a class="read" href="{{ post.get_absolute_url }}">
                             ادامه مطلب
                         </a>
