@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -20,3 +21,10 @@ class SiteSetting(models.Model):
 
     def __str__(self):
         return self.title
+
+    def clean(self):
+        if SiteSetting.objects.exists() and not self.pk:
+            raise ValidationError("فقط یک تنظیمات سایت مجاز است")
+
+    def save(self, *args, **kwargs):
+        return super(SiteSetting, self).save(*args, **kwargs)  # saves the record
