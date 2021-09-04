@@ -48,8 +48,11 @@ INSTALLED_APPS = [
     'cms_contact',
     'cms_tags',
     'cms_category',
-    'cms_comments'
+    'cms_comments',
 ]
+
+AUTH_PROFILE_MODULE = 'cms_account.UserProfile'
+
 CKEDITOR_UPLOAD_PATH = "uploads/"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

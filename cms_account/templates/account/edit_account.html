@@ -32,6 +32,12 @@
             </div>
             {% render_partial 'cms_account.views.user_sidebar' %}
         </div>
+        {% block extra_content %}
+        {% endblock %}
     </div>
+    {% block bottom_content %}
+    {% endblock %}
 
 {% endblock %}
+
+
