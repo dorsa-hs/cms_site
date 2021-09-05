@@ -1,11 +1,43 @@
 {% extends 'shared/_MainLayout.html' %}
 {% load render_partial %}
 
+{% block title %}
+    <title>
+        اطلاعات کاربری
+    </title>
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8"></div>
-            {% render_partial 'cms_account.views.user_sidebar' %}
+            <div class="col-md-8">
+                <h3>
+                    اطلاعات کاربری
+                </h3>
+                <p class="col-md-6">
+                    <span>نام:</span>
+                    <br>
+                    {{ user_profile.user.first_name }}
+                </p>
+                <p class="col-md-6">
+                    <span>نام خانوادگی:</span>
+                    <br>
+                    {{ user_profile.user.last_name }}
+                </p>
+                <br><hr>
+                <p class="col-md-6">
+                    <span>ایمیل:</span>
+                    <br>
+                    {{ user_profile.user.email }}
+                </p>
+                <p class="col-md-6">
+                    <span>نام کاربری:</span>
+                    <br>
+                    {{ user_profile.user.username }}
+                </p>
+            </div>
+            <img src="{{ user_profile.avatar.url }}" width="300" height="300">
+            {#            {% render_partial 'cms_account.views.user_sidebar' %}#}
         </div>
         {% block extra_content %}
         {% endblock %}
@@ -13,3 +45,5 @@
     {% block bottom_content %}
     {% endblock %}
 {% endblock %}
+
+

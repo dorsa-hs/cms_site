@@ -1,19 +1,51 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core import validators
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.forms import ModelForm
 
 from .models import UserProfile
 
 
-class EditProfileForm(ModelForm):
+class EditProfileForm(UserChangeForm):
+    username = forms.CharField(max_length=100,
+                               label='نام کاربری',
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(max_length=100,
+                                 label='نام',
+                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(max_length=100,
+                                label='نام خانوادگی',
+                                widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(label='ایمیل',
+                             widget=forms.EmailInput(attrs={'class': 'form-control'}))
+
     class Meta:
         model = User
         fields = (
-            'email',
+            'username',
             'first_name',
-            'last_name'
+            'last_name',
+            'email'
+        )
+
+
+class PasswordChangingForm(PasswordChangeForm):
+    old_password = forms.CharField(label='رمز عبور قدیمی',
+                                   widget=forms.PasswordInput(attrs={'class': 'form-control', 'type': 'password'}))
+    new_password1 = forms.CharField(max_length=100,
+                                    label='رمز عبور جدید',
+                                    widget=forms.PasswordInput(attrs={'class': 'form-control', 'type': 'password'}))
+    new_password2 = forms.CharField(max_length=100,
+                                    label=' تایید رمز عبور جدید',
+                                    widget=forms.PasswordInput(attrs={'class': 'form-control', 'type': 'password'}))
+
+    class Meta:
+        model = User
+        fields = (
+            'old_password',
+            'new_password1',
+            'new_password2',
         )
 
 

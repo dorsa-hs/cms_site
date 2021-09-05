@@ -1,9 +1,14 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordChangeView
 from django.http import Http404
 from django.shortcuts import render, redirect
-from .forms import LoginForm, RegisterForm, EditUserForm, EditProfileForm, ProfileForm
-from django.contrib.auth import login, get_user_model, authenticate, logout
+from django.urls import reverse_lazy
+
+from .forms import LoginForm, RegisterForm, EditUserForm, EditProfileForm, ProfileForm, PasswordChangingForm
+from .models import UserProfile, createProfile
+from django.contrib.auth import login, get_user_model, authenticate, logout, forms
 from django.contrib.auth.models import User
+from django.views import generic
 
 
 # Create your views here
@@ -38,6 +43,7 @@ def register(request):
         password = register_form.cleaned_data.get('password')
         email = register_form.cleaned_data.get('email')
         User.objects.create_user(username=user_name, email=email, password=password)
+        createProfile(User)
         return redirect('/login')
 
     context = {
@@ -53,7 +59,12 @@ def log_out(request):
 
 @login_required(login_url='/login')
 def user_account_main_page(request):
-    return render(request, 'account/user_account_main.html', {})
+    user_id = request.user.id
+    user_profile = UserProfile.objects.get(user_id=user_id)
+    context = {
+        'user_profile': user_profile
+    }
+    return render(request, 'account/user_account_main.html', context)
 
 
 @login_required(login_url='/login')
@@ -78,11 +89,13 @@ def edit_user_profile(request):
 
     return render(request, 'account/edit_account.html', context)
 
+
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.userprofile)  # request.FILES is show the selected image or file
+        profile_form = ProfileForm(request.POST, request.FILES,
+                                   instance=request.user.userprofile)  # request.FILES is show the selected image or file
 
         if form.is_valid() and profile_form.is_valid():
             user_form = form.save()
@@ -99,5 +112,26 @@ def edit_profile(request):
         args['profile_form'] = profile_form
         return render(request, 'account/edit_account.html', args)
 
+
 def user_sidebar(request):
     return render(request, 'account/user_sidebar.html', {})
+
+
+class UserEditView(generic.UpdateView):
+    form_class = EditProfileForm
+    template_name = 'account/edit_account.html'
+    success_url = '/user'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class PasswordsChangeView(PasswordChangeView):
+    form_class = PasswordChangingForm
+    # form_class = forms.PasswordChangeForm
+    success_url = reverse_lazy('password_success')
+    template_name = 'account/change_password.html'
+
+
+def password_success(request):
+    return render(request, 'account/password_success.html')

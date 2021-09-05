@@ -18,7 +18,7 @@ def upload_image_path(instance, filename):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, verbose_name='کاربر')
-    avatar = models.ImageField(upload_to=upload_image_path, null=True, blank=True, verbose_name='آواتار')
+    avatar = models.ImageField(upload_to=upload_image_path, null=True, blank=True, default='default_profile_pic',  verbose_name='آواتار')
 
     class Meta:
         verbose_name = 'پروفایل کاربر'
