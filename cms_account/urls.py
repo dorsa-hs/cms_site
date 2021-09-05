@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import login_user, register, log_out, user_account_main_page, edit_user_profile, edit_profile, UserEditView, PasswordsChangeView, password_success
+from .views import login_user, register, log_out, user_account_main_page, edit_user_profile, UserEditView, PasswordsChangeView, password_success
 
 urlpatterns = [
     path('login', login_user),

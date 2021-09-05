@@ -17,8 +17,10 @@ def upload_image_path(instance, filename):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, verbose_name='کاربر')
-    avatar = models.ImageField(upload_to=upload_image_path, null=True, blank=True, default='default_profile_pic',  verbose_name='آواتار')
+    user = models.OneToOneField(User, unique=True, null=True, on_delete=models.CASCADE, verbose_name='کاربر')
+    avatar = models.ImageField(upload_to=upload_image_path, null=True, blank=True, default='default_profile_pic',
+                               verbose_name='آواتار')
+    bio = models.TextField(null=True, blank=True, )
 
     class Meta:
         verbose_name = 'پروفایل کاربر'
@@ -26,10 +28,3 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
-
-def createProfile(sender, **kwargs):
-    if kwargs['created']:
-        user_profile = UserProfile.objects.created(user=kwargs['instance'])
-
-    post_save.connect(createProfile, sender=User)

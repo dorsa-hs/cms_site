@@ -33,25 +33,18 @@
             </h3>
 
             {% for comment in comments %}
-                <div class="post-grids">
-                    <div class="col-md-9 post-left">
-                        <div class="single-bottom">
-                        <ul>
-                            <li>
-                                <strong>
-                                    {{ comment.author.get_username }}
-                                </strong>
-                            </li>
-                            <li class="comments">
-                                {{ comment.date_posted }}
-                            </li>
-                        </ul>
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-2">
+                            <img src="{{ comment.author.userprofile.avatar.url}}" width="75" height="75" class="card-img" alt="...">
                         </div>
-                        <br>
-                        <p class="text">
-                            {{ comment.content }}
-                        </p>
-
+                        <div class="col-md-10">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ comment.author.get_full_name }}</h5>
+                                <p class="card-text">{{ comment.content }}</p>
+                                <p class="card-text"><small class="text-muted">{{ comment.date_posted }}</small></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br>

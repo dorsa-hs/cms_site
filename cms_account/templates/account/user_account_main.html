@@ -36,8 +36,9 @@
                     {{ user_profile.user.username }}
                 </p>
             </div>
-            <img src="{{ user_profile.avatar.url }}" width="300" height="300">
+            <img src="{{ user_profile.avatar.url }}" width="300" height="300" class="rounded-circle">
             {#            {% render_partial 'cms_account.views.user_sidebar' %}#}
+
         </div>
         {% block extra_content %}
         {% endblock %}

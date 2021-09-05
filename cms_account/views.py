@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
 from .forms import LoginForm, RegisterForm, EditUserForm, EditProfileForm, ProfileForm, PasswordChangingForm
-from .models import UserProfile, createProfile
+from .models import UserProfile
 from django.contrib.auth import login, get_user_model, authenticate, logout, forms
 from django.contrib.auth.models import User
 from django.views import generic
@@ -43,7 +43,6 @@ def register(request):
         password = register_form.cleaned_data.get('password')
         email = register_form.cleaned_data.get('email')
         User.objects.create_user(username=user_name, email=email, password=password)
-        createProfile(User)
         return redirect('/login')
 
     context = {
@@ -88,29 +87,6 @@ def edit_user_profile(request):
     context = {'edit_form': edit_user_form}
 
     return render(request, 'account/edit_account.html', context)
-
-
-@login_required
-def edit_profile(request):
-    if request.method == 'POST':
-        form = EditProfileForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, request.FILES,
-                                   instance=request.user.userprofile)  # request.FILES is show the selected image or file
-
-        if form.is_valid() and profile_form.is_valid():
-            user_form = form.save()
-            custom_form = profile_form.save(False)
-            custom_form.user = user_form
-            custom_form.save()
-            return redirect('accounts:view_profile')
-    else:
-        form = EditProfileForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.userprofile)
-        args = {}
-        # args.update(csrf(request))
-        args['form'] = form
-        args['profile_form'] = profile_form
-        return render(request, 'account/edit_account.html', args)
 
 
 def user_sidebar(request):
