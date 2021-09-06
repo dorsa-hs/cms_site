@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from cms_account.models import UserProfile
 from cms_category.models import PostCategory
 from cms_posts.models import Post
 from cms_settings.models import SiteSetting
@@ -22,8 +24,14 @@ def home_page(request):
 
 def header(request, *args, **kwargs):
     site_setting = SiteSetting.objects.first()
+    user_id = request.user.id
+    user_profile_exist = UserProfile.objects.filter(user_id=user_id).exists()
+
+
     context = {
-        'setting': site_setting
+        'setting': site_setting,
+        'user_profile_exist': user_profile_exist
+
     }
     return render(request, "shared/Header.html", context)
 

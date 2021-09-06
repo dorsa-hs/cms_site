@@ -7,7 +7,38 @@ from django.forms import ModelForm
 from .models import UserProfile
 
 
-class EditProfileForm(UserChangeForm):
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+        ]
+
+
+class CreateProfilePageForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('bio', 'avatar')
+        widget = {
+            'bio': forms.Textarea(attrs={'class': 'form-control'}),
+            'avatar': forms.ImageField()
+        }
+
+
+class EditProfilePageForm(ModelForm):
+    bio = forms.CharField(label='بیوگرافی',
+                          widget=forms.Textarea(attrs={'class': 'form-control'}))
+    avatar = forms.ImageField(label='آواتار')
+
+    class Meta:
+        model = UserProfile
+        fields = ('bio', 'avatar')
+
+
+class EditAccountForm(UserChangeForm):
     username = forms.CharField(max_length=100,
                                label='نام کاربری',
                                widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -53,19 +84,7 @@ class ProfileForm(ModelForm):
     class Meta:
         model = UserProfile
 
-        fields = ('avatar',)
-
-
-class EditUserForm(forms.Form):
-    first_name = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': 'لطفا نام خود را وارد نمایید', 'class': 'form-control'}),
-        label='نام'
-    )
-
-    last_name = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': 'لطفا نام خانوادگی خود را وارد نمایید', 'class': 'form-control'}),
-        label='نام خانوادگی'
-    )
+        fields = ('avatar', 'bio')
 
 
 class LoginForm(forms.Form):

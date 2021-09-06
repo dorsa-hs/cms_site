@@ -1,10 +1,14 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-
-from .forms import LoginForm, RegisterForm, EditUserForm, EditProfileForm, ProfileForm, PasswordChangingForm
+from django.utils.decorators import method_decorator
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+from .forms import LoginForm, RegisterForm, EditAccountForm, PasswordChangingForm, CreateProfilePageForm, ProfileForm, \
+    UserForm, EditProfilePageForm
 from .models import UserProfile
 from django.contrib.auth import login, get_user_model, authenticate, logout, forms
 from django.contrib.auth.models import User
@@ -66,37 +70,29 @@ def user_account_main_page(request):
     return render(request, 'account/user_account_main.html', context)
 
 
-@login_required(login_url='/login')
-def edit_user_profile(request):
-    user_id = request.user.id
-    user = User.objects.get(id=user_id)
-    if user is None:
-        raise Http404('کاربر مورد نظر یافت نشد')
-
-    edit_user_form = EditUserForm(request.POST or None,
-                                  initial={'first_name': user.first_name, 'last_name': user.last_name})
-
-    if edit_user_form.is_valid():
-        first_name = edit_user_form.cleaned_data.get('first_name')
-        last_name = edit_user_form.cleaned_data.get('last_name')
-
-        user.first_name = first_name
-        user.last_name = last_name
-        user.save()
-
-    context = {'edit_form': edit_user_form}
-
-    return render(request, 'account/edit_account.html', context)
+# class ShowProfilePageView(generic.DetailView):
+#     model = UserProfile
+#     template_name = 'account/user_account_main.html'
+#
+#     def get_object(self, queryset=User.objects.all()):
+#         print(self.kwargs)
+#         user_id = self.kwargs.get("id")
+#         user = get_object_or_404(User, id=user_id)
+#         return user
+#
+#     def get_context_data(self, **kwargs):
+#         print(self.kwargs)
+#         context = super(ShowProfilePageView, self).get_context_data(**kwargs)
+#         user_id = self.get_object().id
+#         user_page = get_object_or_404(UserProfile, id=user_id)
+#         context['user_profile'] = user_page
+#         return context
 
 
-def user_sidebar(request):
-    return render(request, 'account/user_sidebar.html', {})
-
-
-class UserEditView(generic.UpdateView):
-    form_class = EditProfileForm
+class UserEditAccountView(generic.UpdateView):
+    form_class = EditAccountForm
     template_name = 'account/edit_account.html'
-    success_url = '/user'
+    success_url = reverse_lazy('profile')
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -111,3 +107,30 @@ class PasswordsChangeView(PasswordChangeView):
 
 def password_success(request):
     return render(request, 'account/password_success.html')
+
+
+@method_decorator(login_required, name='dispatch')
+class EditProfilePageView(generic.UpdateView):
+    model = UserProfile
+    template_name = 'account/edit_profile.html'
+    success_url = reverse_lazy('profile')
+    fields = ['bio', 'avatar']
+
+    def get_object(self, queryset=None):
+        return self.request.user.userprofile
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class CreateProfilePageView(generic.CreateView):
+    model = UserProfile
+    form_class = CreateProfilePageForm
+    template_name = 'account/create_user_profile_page.html'
+    success_url = reverse_lazy('profile')
+
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)

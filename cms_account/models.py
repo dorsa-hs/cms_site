@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 import os
+from django.dispatch import receiver
+from django.urls import reverse
 
 
 def get_filename_ext(filepath):
@@ -18,9 +20,8 @@ def upload_image_path(instance, filename):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, unique=True, null=True, on_delete=models.CASCADE, verbose_name='کاربر')
-    avatar = models.ImageField(upload_to=upload_image_path, null=True, blank=True, default='default_profile_pic',
-                               verbose_name='آواتار')
-    bio = models.TextField(null=True, blank=True, )
+    avatar = models.ImageField(upload_to=upload_image_path, null=True, blank=True, verbose_name='آواتار')
+    bio = models.TextField(null=True, blank=True, verbose_name='بیوگرافی')
 
     class Meta:
         verbose_name = 'پروفایل کاربر'
@@ -28,3 +29,7 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def get_absolute_url(self):
+        return self.avatar.url
+

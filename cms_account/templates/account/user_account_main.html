@@ -1,5 +1,5 @@
 {% extends 'shared/_MainLayout.html' %}
-{% load render_partial %}
+{% load static %}
 
 {% block title %}
     <title>
@@ -24,7 +24,8 @@
                     <br>
                     {{ user_profile.user.last_name }}
                 </p>
-                <br><hr>
+                <br>
+                <hr>
                 <p class="col-md-6">
                     <span>ایمیل:</span>
                     <br>
@@ -36,9 +37,11 @@
                     {{ user_profile.user.username }}
                 </p>
             </div>
-            <img src="{{ user_profile.avatar.url }}" width="300" height="300" class="rounded-circle">
-            {#            {% render_partial 'cms_account.views.user_sidebar' %}#}
-
+            {% if user_profile.avatar %}
+                <img src="{{ user_profile.avatar.url }}" width="300" height="300" class="rounded-circle">
+            {% else %}
+                <img src="{% static 'images/default_pic.png' %}" width="300" height="300" class="rounded-circle">
+            {% endif %}
         </div>
         {% block extra_content %}
         {% endblock %}

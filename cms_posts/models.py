@@ -75,7 +75,6 @@ class Post(models.Model):
         verbose_name = 'پست'
         verbose_name_plural = 'پست ها'
 
-    # used while managing models from terminal
     def __str__(self):
         return "%s, %s" % (self.title, self.created_on)
 

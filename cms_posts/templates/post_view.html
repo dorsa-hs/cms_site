@@ -36,11 +36,17 @@
                 <div class="card mb-3" style="max-width: 540px;">
                     <div class="row no-gutters">
                         <div class="col-md-2">
-                            <img src="{{ comment.author.userprofile.avatar.url}}" width="75" height="75" class="card-img" alt="...">
+                            {% if comment.author.userprofile.avatar %}
+                                <img src="{{ comment.author.userprofile.avatar.url }}" width="75" height="75"
+                                     class="card-img" alt="...">
+                            {% else %}
+                                <img src="{% static 'images/default_pic.png' %}" width="75" height="75"
+                                     class="rounded-circle">
+                            {% endif %}
                         </div>
                         <div class="col-md-10">
                             <div class="card-body">
-                                <h5 class="card-title">{{ comment.author.get_full_name }}</h5>
+                                <h5 class="card-title">{{ comment.author.get_full_name|default:'کاربر' }}</h5>
                                 <p class="card-text">{{ comment.content }}</p>
                                 <p class="card-text"><small class="text-muted">{{ comment.date_posted }}</small></p>
                             </div>
