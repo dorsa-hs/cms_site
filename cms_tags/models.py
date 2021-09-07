@@ -1,8 +1,8 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save
-
-# from cms_posts.models import Post
 from .utils import unique_slug_generator
+from cms_posts.models import Post
+
 
 
 # class Tag(models.Model):
