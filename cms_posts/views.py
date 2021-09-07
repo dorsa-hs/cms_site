@@ -1,8 +1,7 @@
 from django.shortcuts import render
 
-from cms_category.models import PostCategory
 from .forms import NewCommentForm
-from .models import Post, Comment
+from .models import Post, Comment, PostCategory
 from django.views import generic
 from django.http import HttpResponse, Http404
 

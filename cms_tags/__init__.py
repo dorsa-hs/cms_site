@@ -1,1 +1,1 @@
-default_app_config = "cms_tags.apps.CmsTagsConfig"
+# default_app_config = "cms_tags.apps.CmsTagsConfig"

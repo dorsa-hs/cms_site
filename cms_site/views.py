@@ -1,8 +1,6 @@
 from django.shortcuts import render
-
 from cms_account.models import UserProfile
-from cms_category.models import PostCategory
-from cms_posts.models import Post
+from cms_posts.models import Post, PostCategory
 from cms_settings.models import SiteSetting
 
 

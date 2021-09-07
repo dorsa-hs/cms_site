@@ -1,1 +1,1 @@
-default_app_config = "cms_category.apps.CmsCategoryConfig"
+# default_app_config = "cms_category.apps.CmsCategoryConfig"

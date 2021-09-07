@@ -9,5 +9,11 @@ class CmsPostsConfig(AppConfig):
 
 class CmsCommentsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'cms_comments'
+    name = 'cms_posts'
     verbose_name = 'ماژول نظرات'
+
+
+class CmsCategoryConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'cms_posts'
+    verbose_name = "دسته بندی ها"

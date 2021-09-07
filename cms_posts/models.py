@@ -5,7 +5,6 @@ from django.db import models
 from django_jalali.db import models as jmodels
 from django.contrib.auth.models import User
 from django.utils import timezone
-from cms_category.models import PostCategory
 
 STATUS = (
     (0, "Draft"),
@@ -24,6 +23,18 @@ def upload_image_path(instance, filename):
     name, ext = get_filename_ext(filename)
     final_name = f"{instance.id}-{instance.title}{ext}"
     return f"posts/{final_name}"
+
+class PostCategory(models.Model):
+    title = models.CharField(max_length=150, verbose_name='عنوان')
+    name = models.CharField(max_length=150, verbose_name='عنوان در URL')
+    on_home = models.BooleanField(default=False, verbose_name='نمایش دسته در خانه')
+
+    class Meta:
+        verbose_name = 'دسته بندی'
+        verbose_name_plural = 'دسته بندی ها'
+
+    def __str__(self):
+        return self.title
 
 
 class PostManager(models.Manager):
