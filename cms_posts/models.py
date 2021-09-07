@@ -4,8 +4,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django_jalali.db import models as jmodels
 from django.contrib.auth.models import User
-from cms_comments.models import Comment
-
+from django.utils import timezone
 from cms_category.models import PostCategory
 
 STATUS = (
@@ -42,19 +41,13 @@ class PostManager(models.Manager):
             return None
 
 
-# creating an django model class
 class Post(models.Model):
-    # title field using charfield constraint with unique constraint
     title = models.CharField(max_length=200, unique=True, verbose_name='عنوان')
-    # slug field auto populated using title with unique constraint
     slug = models.SlugField(max_length=200, unique=True, verbose_name='عنوان در url')
-    # author field populated using users database
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='نویسنده')
     # and date time fields automatically populated using system time
     # updated_on = models.DateTimeField(auto_now=True)
     created_on = jmodels.jDateField(verbose_name='تاریخ')
-    time = models.TimeField(null=True, verbose_name='زمان')
-    # content field to store our post
     content = RichTextUploadingField(null=True, blank=True, verbose_name='محتوا')
     active = models.BooleanField(default=False, verbose_name='فعال / غیرفعال')
     categories = models.ManyToManyField(PostCategory, blank=True, verbose_name="دسته بندی ها")
@@ -84,3 +77,17 @@ class Post(models.Model):
     @property
     def number_of_comments(self):
         return Comment.objects.filter(blogpost_connected=self).count()
+
+
+class Comment(models.Model):
+    blogpost_connected = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE, verbose_name='پست')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='نویسنده نظر')
+    content = models.TextField(verbose_name='محتوا')
+    date_posted = jmodels.jDateField(default=timezone.now, verbose_name='تاریخ')
+
+    class Meta:
+        verbose_name = 'نظر'
+        verbose_name_plural = 'نظرات'
+
+    def __str__(self):
+        return str(self.author) + ' - ' + self.blogpost_connected.title[:40]

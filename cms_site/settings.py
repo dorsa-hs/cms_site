@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'cms_contact',
     'cms_tags',
     'cms_category',
-    'cms_comments',
 ]
 
 AUTH_PROFILE_MODULE = 'cms_account.UserProfile'
