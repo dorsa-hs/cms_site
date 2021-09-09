@@ -1,8 +1,9 @@
 from django import forms
+from .models import ContactUs
 from django.core import validators
 
 
-class CreateContactForm(forms.Form):
+class CreateContactForm(forms.ModelForm):
     full_name = forms.CharField(
         widget=forms.TextInput(
             attrs={'placeholder': 'لطفا نام و نام خانوادگی خود را وارد نمایید', 'class': 'form-control'}),
@@ -28,9 +29,11 @@ class CreateContactForm(forms.Form):
         ]
     )
 
-    text = forms.CharField(
-        widget=forms.Textarea(
-            attrs={'placeholder': 'لطفا متن پیام خود را وارد نمایید', 'class': 'form-control', 'rows': '8',
-                   'cols': '20'}),
-        label='متن پیام'
-    )
+    class Meta:
+        model = ContactUs
+        fields = (
+            'full_name',
+            'email',
+            'subject',
+            'text'
+        )

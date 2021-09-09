@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 from .forms import NewCommentForm
 from .models import Post, Comment, PostCategory
 from django.views import generic

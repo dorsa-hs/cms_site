@@ -38,6 +38,7 @@
                 <div class="col-md-6 contact-grid">
                     <form method="post">
                         {% csrf_token %}
+                        {{ contact_form.media }}
                         <p class="your-para">نام:</p>
                         {{ contact_form.full_name }}
                         {% for error in contact_form.full_name.errors %}
