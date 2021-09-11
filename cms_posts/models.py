@@ -26,6 +26,7 @@ def upload_image_path(instance, filename):
     return f"posts/{final_name}"
 
 
+
 class PostCategory(models.Model):
     title = models.CharField(max_length=150, verbose_name='عنوان')
     name = models.CharField(max_length=150, verbose_name='عنوان در URL')
@@ -64,7 +65,6 @@ class Post(models.Model):
     content = RichTextUploadingField(null=True, blank=True, verbose_name='محتوا')
     active = models.BooleanField(default=False, verbose_name='فعال / غیرفعال')
     categories = models.ManyToManyField(PostCategory, blank=True, verbose_name="دسته بندی ها")
-
     image = models.ImageField(upload_to=upload_image_path, null=True, blank=True, verbose_name='تصویر')
 
     # meta description for SEO benifits
