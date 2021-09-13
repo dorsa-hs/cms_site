@@ -5,7 +5,13 @@ from django_jalali.db import models as jmodels
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models.signals import pre_save, post_save
+from django_resized import ResizedImageField
+from io import BytesIO
+from django.core.files import File
+from PIL import Image
 from .utils import unique_slug_generator
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 STATUS = (
     (0, "Draft"),
@@ -25,6 +31,23 @@ def upload_image_path(instance, filename):
     final_name = f"{instance.id}-{instance.title}{ext}"
     return f"posts/{final_name}"
 
+
+def make_thumbnail(image, size=(170, 170)):
+    """Makes thumbnails of given size from given image"""
+
+    im = Image.open(image)
+
+    im.convert('RGB')  # convert mode
+
+    im.thumbnail(size)  # resize image
+
+    thumb_io = BytesIO()  # create a BytesIO object
+
+    im.save(thumb_io, 'JPEG', quality=80)  # save image to BytesIO object
+
+    thumbnail = File(thumb_io, name=image.name)  # create a django friendly File object
+
+    return thumbnail
 
 
 class PostCategory(models.Model):
@@ -65,8 +88,13 @@ class Post(models.Model):
     content = RichTextUploadingField(null=True, blank=True, verbose_name='محتوا')
     active = models.BooleanField(default=False, verbose_name='فعال / غیرفعال')
     categories = models.ManyToManyField(PostCategory, blank=True, verbose_name="دسته بندی ها")
-    image = models.ImageField(upload_to=upload_image_path, null=True, blank=True, verbose_name='تصویر')
-
+    # image = models.ImageField(upload_to=upload_image_path, null=True, blank=True, verbose_name='تصویر')
+    image = ResizedImageField(size=[730, 730], quality=90, upload_to=upload_image_path,
+                              null=True, blank=True, verbose_name='تصویر')
+    thumbnail = ImageSpecField(source='image',
+                               processors=[ResizeToFill(170, 100)],
+                               format='JPEG',
+                               options={'quality': 70})
     # meta description for SEO benifits
     # metades = models.CharField(max_length=300, default="new post")
     # status of post

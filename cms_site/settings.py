@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_jalali',
     'ckeditor',
     'ckeditor_uploader',
+    'imagekit',
 
     # cms apps
     'cms_account',
