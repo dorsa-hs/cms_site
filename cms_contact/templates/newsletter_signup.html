@@ -1,0 +1,17 @@
+{% load render_partial %}
+<div class="sign_main">
+    <h4 class="side">
+        ثبت نام برای خبرنامه
+    </h4>
+    <div class="sign_up">
+        <p class="sign">
+            ثبت نام برای دریافت خبرنامه رایگان ما!
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            {{ newsletter_form }}
+            <input type="submit" value="ارسال">
+        </form>
+
+    </div>
+</div>

@@ -1,10 +1,11 @@
 from django.shortcuts import render
-
+from django.views.generic import CreateView, TemplateView
 from cms_settings.models import SiteSetting
-from .models import ContactUs
+from .models import ContactUs, NewsletterSignUp
+from .forms import CreateContactForm, NewsletterSignupForm
+
 
 # Create your views here.
-from .forms import CreateContactForm
 
 
 def contact_page(request):
@@ -27,3 +28,19 @@ def contact_page(request):
     }
 
     return render(request, 'contact_us_page.html', context)
+
+
+def newsletter_signup(request, *args, **kwargs):
+    newsletter_signup_form = NewsletterSignupForm(request.POST or None)
+
+    if newsletter_signup_form.is_valid():
+        full_name = newsletter_signup_form.cleaned_data.get('full_name')
+        email = newsletter_signup_form.cleaned_data.get('email')
+        NewsletterSignUp.objects.create(full_name=full_name, email=email)
+        newsletter_signup_form = NewsletterSignupForm()
+
+    context = {
+        'newsletter_form': newsletter_signup_form,
+    }
+
+    return render(request, 'newsletter_signup.html', context)

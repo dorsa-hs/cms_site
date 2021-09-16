@@ -122,27 +122,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </script>
                     <!-- //requried-jsfiles-for owl -->
                 </div>{% endcomment %}
-                <!--/start-sign-up-->
                 {% block extra_content %}
-                    <div class="sign_main">
-                        <h4 class="side">
-                            ثبت نام برای خبرنامه
-                        </h4>
-                        <div class="sign_up">
-                            <p class="sign">
-                                ثبت نام برای دریافت خبرنامه رایگان ما!
-                            </p>
-                            <form>
-                                <input type="text" class="text" value="نام" onfocus="this.value = '';"
-                                       onblur="if (this.value == '') {this.value = 'Name';}">
-                                <input type="text" class="text" value="آدرس ایمیل" onfocus="this.value = '';"
-                                       onblur="if (this.value == '') {this.value = 'Email Address';}">
-                                <input type="submit" value="ارسال">
-                            </form>
-                            <p class="spam">لورم ایپسوم متن ساختگی با تولید سادگی</p>
-                        </div>
-                    </div>
-                    <!--//end-sign-up-->
+                    {% render_partial 'newsletter_signup' %}
                     <h4 class="side">
                         محبوب پست ها
                     </h4>

@@ -17,3 +17,15 @@ class ContactUs(models.Model):
 
     def __str__(self):
         return self.subject
+
+
+class NewsletterSignUp(models.Model):
+    full_name = models.CharField(max_length=150, verbose_name='نام و نام خانوادگی')
+    email = models.EmailField(max_length=100, verbose_name='ایمیل')
+
+    class Meta:
+        verbose_name = 'عضو خبرنامه'
+        verbose_name_plural = 'اعضاء خبرنامه'
+
+    def __str__(self):
+        return self.email
