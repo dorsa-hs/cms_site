@@ -41,13 +41,14 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'imagekit',
-    'django_mail_admin',
+    # 'django_mail_admin',
 
     # cms apps
     'cms_account',
     'cms_posts',
     'cms_settings',
     'cms_contact',
+    'cms_mail'
 ]
 
 AUTH_PROFILE_MODULE = 'cms_account.UserProfile'
@@ -93,7 +94,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-EMAIL_BACKEND = 'django_mail_admin.backends.CustomEmailBackend'
+# EMAIL_BACKEND = 'django_mail_admin.backends.CustomEmailBackend'
 
 ROOT_URLCONF = 'cms_site.urls'
 
