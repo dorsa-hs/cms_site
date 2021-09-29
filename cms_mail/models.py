@@ -110,6 +110,7 @@ class Mail(models.Model):
     #     blank=True,
     #     help_text=_("Used only if template is not selected")
     # )
+
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     last_updated = models.DateTimeField(db_index=True, auto_now=True)
 

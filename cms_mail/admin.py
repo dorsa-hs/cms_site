@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.core.mail import send_mail
-
+from django.template.loader import render_to_string
 from .models import MailSetting, Mail
 from django.conf import settings
 
@@ -19,6 +19,8 @@ def send_prepared_mail(modeladmin, request, queryset):
         settings.EMAIL_USE_TLS = mail.mail_service.email_use_tls
         settings.EMAIL_PORT = mail.mail_service.email_port
 
+        msg_html = render_to_string('email_template.html', {'mail': mail})
+
         receivers = []
         for receiver in list(mail.receiver.all()):
             receivers.append(receiver.email)
@@ -27,7 +29,8 @@ def send_prepared_mail(modeladmin, request, queryset):
             mail.subject,
             mail.message,
             mail.mail_service.email_host,
-            receivers
+            receivers,
+            html_message=msg_html,
 
         )
         if is_sent:
@@ -38,7 +41,7 @@ def send_prepared_mail(modeladmin, request, queryset):
 
 @admin.register(Mail)
 class MailModelAdmin(admin.ModelAdmin):
-    list_display = ['subject', 'mail_service','created', 'last_updated', 'id', 'status']
+    list_display = ['subject', 'mail_service', 'created', 'last_updated', 'id', 'status']
     actions = ['send_prepared_mail']
 
     send_prepared_mail.short_description = "ارسال پیام (mail) های انتخاب شده"
